@@ -1,13 +1,13 @@
 
 
-import TodoApp from "./TodoApp"
+import Todoapps from "./Todoapps"
 
 function App() {
 
   return (
    
    
-    <TodoApp/>
+    <Todoapps/>
 
   )
 }
