@@ -1,13 +1,15 @@
 
 
 import Todoapps from "./Todoapps"
+import StudentDashboard from "./StudentDashboard"
 
 function App() {
 
   return (
    
    
-    <Todoapps/>
+    // <Todoapps/>
+    <StudentDashboard/>
 
   )
 }

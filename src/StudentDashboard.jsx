@@ -2,9 +2,7 @@ import { useState } from 'react';
 
 function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
-  const [darkMode, setDarkMode] = useState(false);
-  const [courseFilter, setCourseFilter] = useState('all');
-
+  
   const courses = [
     { id: 1, name: 'React Fundamentals', progress: 75, instructor: 'Sarah Wilson', nextLesson: 'Components & Props', color: 'blue' },
     { id: 2, name: 'JavaScript Advanced', progress: 45, instructor: 'Mike Johnson', nextLesson: 'Async/Await', color: 'purple' },
@@ -29,205 +27,119 @@ function StudentDashboard() {
     { label: 'Assignments', value: '12', icon: '✍️' },
   ];
 
-  const sidebarItems = [
-    { id: 'overview', label: 'Overview', icon: '🏠' },
-    { id: 'courses', label: 'My Courses', icon: '📖' },
-    { id: 'assignments', label: 'Assignments', icon: '📝' },
-  ];
-
-  const filteredCourses = courseFilter === 'all' 
-    ? courses 
-    : courses.filter(c => courseFilter === 'completed' ? c.progress === 100 : c.progress < 100);
-
   return (
-    <div className={`min-h-screen flex ${darkMode ? 'bg-gray-900 text-gray-100' : 'bg-gray-50 text-gray-800'}`}>
-      {/* Navigation Sidebar */}
-      <aside className={`w-64 border-r flex flex-col justify-between p-4 ${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-        <div className="space-y-6">
-          <div className="flex items-center space-x-2 px-2 py-3">
-            <span className="text-2xl">🎓</span>
-            <span className="font-bold text-xl tracking-tight">EduPulse</span>
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header Section */}
+        <div className="bg-white rounded-2xl shadow-sm p-6 mb-6">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">Welcome back, Student!</h1>
+              <p className="text-gray-500">Here's what's happening with your courses today.</p>
+            </div>
+            <div className="flex items-center space-x-4">
+              <div className="relative">
+                <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
+                <button className="p-2 text-gray-400 hover:text-gray-500">
+                  🔔
+                </button>
+              </div>
+              <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center text-white font-semibold">
+                S
+              </div>
+            </div>
           </div>
-          <nav className="space-y-1">
-            {sidebarItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setActiveTab(item.id)}
-                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                  activeTab === item.id
-                    ? 'bg-blue-600 text-white'
-                    : darkMode 
-                      ? 'text-gray-400 hover:bg-gray-700 hover:text-gray-200' 
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-                }`}
-              >
-                <span className="text-lg">{item.icon}</span>
-                <span>{item.label}</span>
-              </button>
-            ))}
-          </nav>
         </div>
 
-        {/* Theme Toggle Button */}
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className={`w-full flex items-center justify-between p-3 rounded-xl border text-sm font-medium transition-colors ${
-            darkMode 
-              ? 'border-gray-700 hover:bg-gray-700 text-yellow-400' 
-              : 'border-gray-200 hover:bg-gray-100 text-gray-600'
-          }`}
-        >
-          <div className="flex items-center space-x-3">
-            <span>{darkMode ? '☀️' : '🌙'}</span>
-            <span className={darkMode ? 'text-gray-300' : 'text-gray-600'}>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>
-          </div>
-        </button>
-      </aside>
-
-      {/* Main Workspace */}
-      <main className="flex-1 py-8 px-8 overflow-y-auto max-w-7xl">
-        {/* Dynamic Header */}
-        <header className={`rounded-2xl shadow-sm p-6 mb-6 flex items-center justify-between transition-colors ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-          <div>
-            <h1 className="text-2xl font-bold">Welcome back, Student!</h1>
-            <p className={darkMode ? 'text-gray-400' : 'text-gray-500'}>
-              {activeTab === 'overview' && "Here's what's happening with your courses today."}
-              {activeTab === 'courses' && 'Manage your enrolled paths and curriculum progress.'}
-              {activeTab === 'assignments' && 'Track and submit your open coursework deadlines.'}
-            </p>
-          </div>
-          <div className="flex items-center space-x-4">
-            <div className="relative">
-              <span className="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-400 ring-2 ring-white" />
-              <button className={`p-2 transition-colors ${darkMode ? 'text-gray-400 hover:text-gray-300' : 'text-gray-400 hover:text-gray-500'}`}>
-                🔔
-              </button>
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+          {stats.map((stat, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-sm p-6">
+              <div className="flex items-center">
+                <div className="text-2xl mr-4">{stat.icon}</div>
+                <div>
+                  <div className="text-sm text-gray-500">{stat.label}</div>
+                  <div className="text-2xl font-bold text-gray-800">{stat.value}</div>
+                </div>
+              </div>
             </div>
-            <div className="h-10 w-10 rounded-full bg-gradient-to-r from-purple-400 to-pink-500 flex items-center justify-center text-white font-semibold shadow-md">
-              S
+          ))}
+        </div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Course Progress Section */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-gray-800 mb-4">Course Progress</h2>
+              <div className="space-y-4">
+                {courses.map(course => (
+                  <div key={course.id} className="bg-gray-50 rounded-lg p-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <h3 className="font-medium text-gray-800">{course.name}</h3>
+                      <span className="text-sm text-gray-500">{course.progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <div
+                        className={`h-2.5 rounded-full bg-${course.color}-500`}
+                        style={{ width: `${course.progress}%` }}
+                      ></div>
+                    </div>
+                    <div className="mt-2 flex justify-between text-sm">
+                      <span className="text-gray-500">Next: {course.nextLesson}</span>
+                      <span className="text-gray-500">{course.instructor}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </header>
 
-        {/* Tab Sub-views */}
-        {activeTab === 'overview' && (
+          {/* Sidebar Content */}
           <div className="space-y-6">
-            {/* Stats Grid */}
-            <section className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {stats.map((stat, index) => (
-                <div key={index} className={`rounded-xl shadow-sm p-6 transition-colors ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-                  <div className="flex items-center">
-                    <div className="text-2xl mr-4">{stat.icon}</div>
+            {/* Upcoming Assignments */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-gray-800 mb-4">Upcoming Assignments</h2>
+              <div className="space-y-4">
+                {assignments.map(assignment => (
+                  <div key={assignment.id} className="flex items-center justify-between">
                     <div>
-                      <div className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{stat.label}</div>
-                      <div className="text-2xl font-bold">{stat.value}</div>
+                      <h3 className="font-medium text-gray-800">{assignment.title}</h3>
+                      <p className="text-sm text-gray-500">{assignment.course}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                        ${assignment.status === 'completed' ? 'bg-green-100 text-green-800' :
+                          assignment.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                        }`}>
+                        {assignment.status}
+                      </span>
+                      <p className="text-xs text-gray-500 mt-1">Due {assignment.dueDate}</p>
                     </div>
                   </div>
-                </div>
-              ))}
-            </section>
-
-            {/* Quick Overview Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2">
-                <div className={`rounded-xl shadow-sm p-6 h-full transition-colors ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-                  <h2 className="text-lg font-semibold mb-4">Current Progress</h2>
-                  <div className="space-y-4">
-                    {courses.slice(0, 2).map(course => (
-                      <div key={course.id} className={`rounded-lg p-4 transition-colors ${darkMode ? 'bg-gray-700/50' : 'bg-gray-50'}`}>
-                        <div className="flex justify-between items-center mb-2">
-                          <h3 className="font-medium">{course.name}</h3>
-                          <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{course.progress}%</span>
-                        </div>
-                        <div className={`w-full rounded-full h-2.5 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}`}>
-                          <div className={`h-2.5 rounded-full bg-${course.color}-500`} style={{ width: `${course.progress}%` }}></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className={`rounded-xl shadow-sm p-6 transition-colors ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-                <h2 className="text-lg font-semibold mb-4">Announcements</h2>
-                <div className="space-y-4">
-                  {announcements.map(announcement => (
-                    <div key={announcement.id} className="border-l-4 border-blue-500 pl-4">
-                      <h3 className="font-medium text-sm">{announcement.title}</h3>
-                      <p className={`text-xs mt-1 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{announcement.message}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'courses' && (
-          <section className={`rounded-xl shadow-sm p-6 transition-colors ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-              <h2 className="text-lg font-semibold">All Enrolled Courses</h2>
-              <div className="flex space-x-2">
-                {['all', 'ongoing', 'completed'].map((filter) => (
-                  <button
-                    key={filter}
-                    onClick={() => setCourseFilter(filter)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium uppercase tracking-wider transition-colors ${
-                      courseFilter === filter
-                        ? 'bg-blue-600 text-white'
-                        : darkMode 
-                          ? 'bg-gray-700 text-gray-300 hover:bg-gray-600' 
-                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    {filter}
-                  </button>
                 ))}
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {filteredCourses.map(course => (
-                <div key={course.id} className={`rounded-xl p-5 border transition-colors ${darkMode ? 'bg-gray-700/30 border-gray-700' : 'bg-gray-50 border-gray-100'}`}>
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="font-bold text-base">{course.name}</h3>
-Use code with caution.
-<p className={text-xs mt-0.5 ${darkMode ? 'text-gray-400' : 'text-gray-500'}}>Instructor: {course.instructor}
-
-{course.progress}%
-<div className={w-full rounded-full h-2 mb-4 ${darkMode ? 'bg-gray-700' : 'bg-gray-200'}}>
-<div className={h-2 rounded-full bg-${course.color}-500} style={{ width: ${course.progress}% }}>
-<div className={text-xs flex items-center justify-between border-t pt-3 ${darkMode ? 'border-gray-700 text-gray-400' : 'border-gray-200 text-gray-500'}}>
-🎯 Next up: {course.nextLesson}
-
-
-))}
-
-
-)}
-{activeTab === 'assignments' && (
-Coursework Deadlines
-
-{assignments.map(assignment => (
-<div key={assignment.id} className={flex items-center justify-between p-4 rounded-xl border transition-colors ${darkMode ? 'bg-gray-700/30 border-gray-700' : 'bg-gray-50 border-gray-100'}}>
-
-{assignment.title}
-<p className={text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}}>{assignment.course}
-
-
-<span className={inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${ assignment.status === 'completed' ? 'bg-green-100 text-green-800' :  assignment.status === 'in-progress' ? 'bg-yellow-100 text-yellow-800' :  'bg-red-100 text-red-800' }}>
-{assignment.status}
-
-<p className={text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}}>Due {assignment.dueDate}
-
-
-))}
-
-
-)}
-
-
-);
+            {/* Announcements */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-lg font-semibold text-gray-800 mb-4">Announcements</h2>
+              <div className="space-y-4">
+                {announcements.map(announcement => (
+                  <div key={announcement.id} className="border-l-4 border-blue-500 pl-4">
+                    <h3 className="font-medium text-gray-800">{announcement.title}</h3>
+                    <p className="text-sm text-gray-500 mt-1">{announcement.message}</p>
+                    <p className="text-xs text-gray-400 mt-1">{announcement.time}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
-export default StudentDashboard;
+
+export default StudentDashboard; 
