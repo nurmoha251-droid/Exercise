@@ -1,13 +1,12 @@
 
+import StudentRegistration from "./StudentRegistration"
 
-import JobApplicationForm from "./JobApplicationForm"
 
 function App() {
 
   return (
-<JobApplicationForm/>
+    <StudentRegistration />
 
- 
 
   )
 }
