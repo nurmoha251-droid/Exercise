@@ -1,17 +1,13 @@
 
 
-import Todoapps from "./Todoapps"
-import StudentDashboard from "./StudentDashboard"
-import UserForm from "./UserForm"
+import JobApplicationForm from "./JobApplicationForm"
 
 function App() {
 
   return (
-   
-   
-    // <Todoapps/>
-    // <StudentDashboard/>
-    <UserForm/>
+<JobApplicationForm/>
+
+ 
 
   )
 }
